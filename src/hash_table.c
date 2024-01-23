@@ -4,12 +4,16 @@
 #include <stdio.h>
 
 #include "hash_table.h"
+#include "prime.h"
 
 #define HT_INITIAL_BASE_SIZE 50
 #define HT_PRIME_1 151
 #define HT_PRIME_2 163
 
 static ht_item HT_DELETED_ITEM = {NULL, NULL};
+
+static void ht_resize_up(ht_hash_table *ht);
+static void ht_resize_down(ht_hash_table *ht);
 
 //* Utility functions for memory allocation with error checking
 void *safe_malloc(size_t size)
@@ -34,12 +38,7 @@ void *safe_calloc(size_t count, size_t size)
     return result;
 }
 
-//* Function declaration
-int ht_hash(const char *s, const int a, const int m);
-int ht_get_hash(const char *s, const int num_buckets, const int attempt);
-void ht_resize_up(ht_hash_table *ht);
-void ht_resize_down(ht_hash_table *ht);
-
+//* Create functions
 static ht_item *ht_new_item(const char *k, const char *v)
 {
     ht_item *i = safe_malloc(sizeof(ht_item));

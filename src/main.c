@@ -1,6 +1,7 @@
 #include <assert.h>
 #include <stdio.h>
 #include <string.h>
+
 #include "hash_table.h"
 
 void test_hash_table()
@@ -36,7 +37,7 @@ void test_hash_table()
     assert(value == NULL);
 
     // Delete non-existent element
-    ht_delete(ht, "nonexistent"); // Should not cause an error
+    ht_delete(ht, "nonexistent"); // Should not cause an error btw
 
     ht_del_hash_table(ht);
 
