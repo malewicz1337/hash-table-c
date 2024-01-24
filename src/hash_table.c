@@ -77,23 +77,32 @@ ht_hash_table *ht_new()
 //* Delete functions
 static void ht_del_item(ht_item *i)
 {
+    if (i == NULL)
+        return;
+
     free(i->key);
+    i->key = NULL;
     free(i->value);
+    i->value = NULL;
     free(i);
 }
 
 void ht_del_hash_table(ht_hash_table *ht)
 {
+    if (ht == NULL)
+        return;
+
     for (int i = 0; i < ht->size; i++)
     {
         ht_item *item = ht->items[i];
-        if (item != NULL)
+        if (item != NULL && item != &HT_DELETED_ITEM)
         {
             ht_del_item(item);
         }
     }
 
     free(ht->items);
+    ht->items = NULL;
     free(ht);
 }
 
