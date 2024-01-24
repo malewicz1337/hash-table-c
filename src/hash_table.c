@@ -43,20 +43,17 @@ static ht_item *ht_new_item(const char *k, const char *v)
 {
     ht_item *i = safe_malloc(sizeof(ht_item));
     i->key = strdup(k);
-    if (!i->key)
-    {
-        free(i);
-        fprintf(stderr, "Error: strdup failed for key\n");
-        exit(EXIT_FAILURE);
-    }
     i->value = strdup(v);
-    if (!i->value)
+
+    if (!i->key || !i->value)
     {
         free(i->key);
+        free(i->value);
         free(i);
-        fprintf(stderr, "Error: strdup failed for value\n");
+        fprintf(stderr, "Error: strdup failed\n");
         exit(EXIT_FAILURE);
     }
+
     return i;
 }
 
@@ -170,10 +167,7 @@ char *ht_search(ht_hash_table *ht, const char *key)
                 return item->value;
             }
         }
-        if (strcmp(item->key, key) == 0)
-        {
-            return item->value;
-        }
+
         index = ht_get_hash(key, ht->size, i);
         item = ht->items[index];
         i++;
@@ -192,6 +186,7 @@ void ht_delete(ht_hash_table *ht, const char *key)
     int index = ht_get_hash(key, ht->size, 0);
     ht_item *item = ht->items[index];
     int i = 1;
+    int found = 0;
 
     while (item != NULL)
     {
@@ -201,14 +196,20 @@ void ht_delete(ht_hash_table *ht, const char *key)
             {
                 ht_del_item(item);
                 ht->items[index] = &HT_DELETED_ITEM;
+                found = 1;
+                break;
             }
         }
+
         index = ht_get_hash(key, ht->size, i);
         item = ht->items[index];
         i++;
     }
 
-    ht->count--;
+    if (found)
+    {
+        ht->count--;
+    }
 }
 
 //* Resizing functions
@@ -226,6 +227,7 @@ static void ht_resize(ht_hash_table *ht, const int base_size)
         if (item != NULL && item != &HT_DELETED_ITEM)
         {
             ht_insert(new_ht, item->key, item->value);
+            ht_del_item(item);
         }
     }
 
