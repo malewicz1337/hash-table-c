@@ -45,7 +45,8 @@ void test_hash_table()
     printf("Delete passed...\n");
 
     // Delete non-existent element
-    ht_delete(ht, "nonexistent"); // Should not cause an error btw
+    // Should not cause an error btw
+    ht_delete(ht, "nonexistent"); 
 
     printf("Non-existent delete passed...\n");
 
