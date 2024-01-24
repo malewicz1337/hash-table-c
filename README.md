@@ -43,11 +43,3 @@ The `main.c` file contains tests for various operations such as insertion, searc
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](https://github.com/malewicz1337/hash-table-c/blob/main/LICENSE) file for details.
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a pull request.
-
----
-
-_Note: This README is generated based on the current state of the repository and might not fully reflect all features or usage instructions._
