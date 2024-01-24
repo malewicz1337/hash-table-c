@@ -28,10 +28,8 @@ void test_hash_table()
 
     printf("Search passed...\n");
 
-    // Test for non-existent key
     value = ht_search(ht, "nonexistent");
     assert(value == NULL);
-
     printf("Non-existent search passed...\n");
 
     ht_delete(ht, "key1");
@@ -41,13 +39,9 @@ void test_hash_table()
     ht_delete(ht, "key2");
     value = ht_search(ht, "key2");
     assert(value == NULL);
-
     printf("Delete passed...\n");
 
-    // Delete non-existent element
-    // Should not cause an error btw
-    ht_delete(ht, "nonexistent"); 
-
+    ht_delete(ht, "nonexistent");
     printf("Non-existent delete passed...\n");
 
     ht_del_hash_table(ht);

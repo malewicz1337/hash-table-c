@@ -132,7 +132,7 @@ void ht_insert(ht_hash_table *ht, const char *key, const char *value)
     ht_item *cur_item = ht->items[index];
     int i = 1;
 
-    while (cur_item != NULL && cur_item != &HT_DELETED_ITEM)
+    while (cur_item != NULL)
     {
         if (cur_item != &HT_DELETED_ITEM)
         {
@@ -158,6 +158,7 @@ char *ht_search(ht_hash_table *ht, const char *key)
     int index = ht_get_hash(key, ht->size, 0);
     ht_item *item = ht->items[index];
     int i = 1;
+
     while (item != NULL)
     {
         if (item != &HT_DELETED_ITEM)
@@ -221,7 +222,6 @@ static void ht_resize(ht_hash_table *ht, const int base_size)
     }
 
     ht_hash_table *new_ht = ht_new_sized(base_size);
-
     for (int i = 0; i < ht->size; i++)
     {
         ht_item *item = ht->items[i];
@@ -234,7 +234,7 @@ static void ht_resize(ht_hash_table *ht, const int base_size)
     ht->base_size = new_ht->base_size;
     ht->count = new_ht->count;
 
-    // To delete new_ht, give it ht's size and items
+    // To delete new_ht, we give it ht's size and items
     const int tmp_size = ht->size;
     ht->size = new_ht->size;
     new_ht->size = tmp_size;
