@@ -1,4 +1,4 @@
-# Simple Hash Table Implementation in C
+# Simple Hash Table Implementation in C )))
 
 This repository contains a simple implementation of a hash table in C. It demonstrates fundamental concepts of hash table design including hashing functions, collision resolution, and dynamic resizing.
 
